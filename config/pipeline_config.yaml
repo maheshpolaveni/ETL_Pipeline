@@ -1,0 +1,54 @@
+# Pipeline Configuration
+# YAML-based configuration for easy parameterization
+
+s3:
+  bucket: retail-sales-data
+  raw_data_path: s3://retail-sales-data/raw/
+  processed_data_path: s3://retail-sales-data/processed/
+  region: us-east-1
+  # Credentials should be set via environment variables or IAM roles
+  # AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY
+
+delta:
+  database: retail_sales
+  bronze_table: sales_bronze
+  silver_table: sales_silver
+  gold_table: sales_gold
+  table_path: /dbfs/mnt/retail-sales/delta/
+  # Alternative: dbfs:/mnt/retail-sales/delta/ or s3://bucket/delta/
+
+pipeline:
+  incremental: true
+  date_column: sale_date
+  partition_column: sale_date
+  quality_thresholds:
+    null_percentage: 0.05  # 5% maximum null percentage
+    min_record_count: 100
+    max_age_hours: 24  # Data should be no older than 24 hours
+  
+  # Business rules
+  business_rules:
+    min_sale_amount: 0.01
+    max_sale_amount: 100000
+    valid_regions: ["North", "South", "East", "West"]
+
+data_quality:
+  critical_checks:
+    - record_count
+    - null_percentage
+    - data_freshness
+  warning_checks:
+    - business_rules
+    - referential_integrity
+  
+  # Quality check thresholds
+  thresholds:
+    record_count_variance: 0.10  # 10% variance allowed
+    null_threshold: 0.05
+    freshness_hours: 24
+
+logging:
+  level: INFO
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: /dbfs/logs/etl_pipeline.log
+

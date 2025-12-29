@@ -1,0 +1,58 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+
+# Databricks
+.databricks/
+*.log
+*.delta
+*.parquet
+
+# Sensitive files
+*_secrets.yaml
+*_credentials.json
+.env
+.aws/
+config/*_production.yaml
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-project
+*.sublime-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Large data files (keep sample, ignore large datasets)
+data/raw/
+data/processed/
+*.csv
+!data/sample/sample_sales_data.csv
+
+# Temporary files
+*.tmp
+*.bak
+*.cache
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Environment
+.env.local
+.env.*.local
+

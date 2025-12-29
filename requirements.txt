@@ -1,0 +1,22 @@
+# ETL Pipeline Requirements
+# Core dependencies for retail sales ETL pipeline
+
+# AWS SDK
+boto3==1.34.0
+botocore==1.34.0
+
+# Configuration
+pyyaml==6.0.1
+
+# Data processing (typically pre-installed in Databricks)
+# pyspark - provided by Databricks runtime
+# delta-spark - provided by Databricks runtime
+
+# Testing (optional, for local development)
+pytest==7.4.3
+pytest-spark==0.6.0
+
+# Data generation (for sample data)
+pandas==2.1.4
+numpy==1.26.2
+
