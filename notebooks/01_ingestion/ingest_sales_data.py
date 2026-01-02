@@ -58,32 +58,19 @@ logger.info("✓ Ingestion setup completed")
 
 dbutils.widgets.removeAll()
 
-dbutils.widgets.text(
-    "source_path",
-    config.get("s3.raw_data_path", "s3://retail-sales-demo-mahesh/raw/"),
-    "Source Path"
-)
+# Widgets
+dbutils.widgets.text("source_path", "https://retail-sales-demo-mahesh.s3.ap-south-1.amazonaws.com/raw/sample_sales_data.csv", "Source Path")
+dbutils.widgets.text("target_date", datetime.now().strftime("%Y-%m-%d"), "Target Date")
+dbutils.widgets.dropdown("load_type", "full", ["full", "incremental"], "Load Type")
+dbutils.widgets.dropdown("file_format", "csv", ["csv", "json"], "File Format")
 
-dbutils.widgets.text(
-    "target_date",
-    datetime.now().strftime("%Y-%m-%d"),
-    "Target Date"
-)
-
-dbutils.widgets.dropdown(
-    "load_type", "full", ["full", "incremental"], "Load Type"
-)
-
-dbutils.widgets.dropdown(
-    "file_format", "csv", ["csv", "json"], "File Format"
-)
-
+# Get parameters
 source_path = dbutils.widgets.get("source_path")
 target_date = dbutils.widgets.get("target_date")
 load_type = dbutils.widgets.get("load_type")
 file_format = dbutils.widgets.get("file_format")
 
-logger.info(f"Params | source={source_path}, date={target_date}, type={load_type}")
+logger.info(f"Parameters | source={source_path}, date={target_date}, type={load_type}, format={file_format}")
 
 
 # COMMAND ----------
